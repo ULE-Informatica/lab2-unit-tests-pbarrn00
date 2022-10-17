@@ -1,13 +1,10 @@
 #include <math.h>
 #include <limits.h>
 #include <stdio.h>
-#include <stdint.h>
-
-extern size_t popcount(uintmax_t);
-#define PRECISION(x) popcount(x)
+#include <stdint.h> 
 
 /**
- * 
+ * INT30-C. Ensure that unsigned integer operations do not wrap
 */
 unsigned int wrapFunctionAdd(unsigned int ui_a, unsigned int ui_b) {
   unsigned int usum;
@@ -23,7 +20,7 @@ unsigned int wrapFunctionAdd(unsigned int ui_a, unsigned int ui_b) {
 }
 
 /**
- * 
+ * INT32-C. Ensure that operations on signed integers do not result in overflow
 */
 unsigned int wrapFunctionMul(unsigned int ui_a, unsigned int ui_b) {
   unsigned umul = ui_a;
@@ -49,7 +46,7 @@ unsigned int wrapFunctionMul(unsigned int ui_a, unsigned int ui_b) {
 uint32_t wrapFunctionShift(uint32_t ui_a, unsigned int ui_b) {
   uint32_t uShift = 0;
 
-  if (ui_b >= PRECISION(UINT_MAX)) {
+  if (ui_b >= __builtin_popcount(UINT_MAX)) {
     /* Handle error */
     printf("Error: wrapFunctionShift wrapping!");
   } else {
