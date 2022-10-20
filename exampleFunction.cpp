@@ -20,7 +20,7 @@ unsigned int wrapFunctionAdd(unsigned int ui_a, unsigned int ui_b) {
 }
 
 /**
- * INT32-C. Ensure that operations on signed integers do not result in overflow
+ * INT30-C. Ensure that unsigned integer operations do not wrap
 */
 unsigned int wrapFunctionMul(unsigned int ui_a, unsigned int ui_b) {
   unsigned umul = ui_a;
@@ -41,7 +41,8 @@ unsigned int wrapFunctionMul(unsigned int ui_a, unsigned int ui_b) {
 }
 
 /**
- * 
+ * INT34-C. Do not shift an expression by a negative number of bits or by greater
+ * than or equal to the number of bits that exist in the operand
 */
 uint32_t wrapFunctionShift(uint32_t ui_a, unsigned int ui_b) {
   uint32_t uShift = 0;
@@ -49,6 +50,7 @@ uint32_t wrapFunctionShift(uint32_t ui_a, unsigned int ui_b) {
   if (ui_b >= __builtin_popcount(UINT_MAX)) {
     /* Handle error */
     printf("Error: wrapFunctionShift wrapping!");
+    return -1;
   } else {
     uShift = ui_a << ui_b | ui_a >> (32 - ui_b);  /* (32 - unsigned int) = uint32_t  ???*/
   }
